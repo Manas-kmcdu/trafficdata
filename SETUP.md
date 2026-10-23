@@ -23,7 +23,7 @@ Do not create a new Apps Script deployment URL unless you also update the URL in
 - Open the deployed site and load the opinions feed.
 - Submit an opinion of 20–280 characters while the topic is open.
 - React to an opinion and refresh the page to confirm the reaction persists.
-- Vote in an open poll; results are hidden until the backend has at least 30 votes in the requested result slice.
+- Choose a gender before submitting an opinion or voting in an open poll. Both selections are saved with the response. Poll results are hidden until the backend has at least 30 votes in the requested result slice.
 - Add a campus food outlet and rate an eligible outlet. Food ratings and votes are shared through the Apps Script spreadsheet.
 
 The Apps Script creates its data sheets automatically. The `topics` and `polls` sheets are configuration sheets; edit their rows to manage topic and poll configuration.

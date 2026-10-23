@@ -159,9 +159,8 @@ function submit_(b) {
   const text = String(b.text || '').trim().replace(/\s+/g, ' ');
   if (text.length < MIN_LEN || text.length > MAX_LEN) return { ok: false, message: 'Opinion must be ' + MIN_LEN + '-' + MAX_LEN + ' characters.' };
   if (CAMPUSES.indexOf(b.campus) < 0) return { ok: false, message: 'Missing campus.' };
-  // The current opinion form does not ask for gender. Keep it optional and blank
-  // unless a future UI explicitly collects one of the supported values.
-  const gender = GENDERS.indexOf(b.gender) >= 0 ? b.gender : '';
+  if (GENDERS.indexOf(b.gender) < 0) return { ok: false, message: 'Choose your gender.' };
+  const gender = b.gender;
   const clientId = String(b.clientId || '');
   if (!clientId) return { ok: false, message: 'Missing client.' };
   const s = sh_('opinions');
@@ -204,7 +203,8 @@ function vote_(b) {
   if (!clientId) return { ok: false, message: 'Missing client.' };
   if (!/^[a-z0-9-]{1,30}$/.test(String(b.collegeId || ''))) return { ok: false, message: 'Pick your college first.' };
   if (CAMPUSES.indexOf(b.campus) < 0) return { ok: false, message: 'Missing campus.' };
-  const gender = GENDERS.indexOf(b.gender) >= 0 ? b.gender : '';
+  if (GENDERS.indexOf(b.gender) < 0) return { ok: false, message: 'Choose your gender.' };
+  const gender = b.gender;
   const dupe = rows_('votes').some(r => r[0] === pollId && r[5] === clientId);
   if (!dupe) sh_('votes').appendRow([pollId, optionId, b.collegeId, b.campus, gender, clientId, Date.now()]);
   const res = results_({ poll: pollId, scope: 'all' });
